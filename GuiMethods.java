@@ -5,6 +5,10 @@
  * @author (your name) 
  * @version (a version number or a date)
  */
+import java.awt.*;          // access to Container
+import java.awt.event.*;    // access to WindowAdapter, WindowEvent
+import javax.swing.*;       // access to JFrame and Jcomponents
+import javax.swing.event.*;		// access to JSlider events
 public class GuiMethods
 {
     // instance variables - replace the example below with your own
