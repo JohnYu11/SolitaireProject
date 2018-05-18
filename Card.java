@@ -1,33 +1,43 @@
 
 /**
- * Write a description of class Card here.
+ * FINAL PROJECT
+ * Fiona Harrington
+ * 4/26/2018
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * Description: This class represents the attributes 
+ * of a card with a given number and suit.
+ * 
+ * Purpose: These cards are used to fill arrays and
+ * can be used to compare to other cards.
  */
 public class Card
 {
-    // instance variables - replace the example below with your own
-    private int x;
+    private int myNumber; //initialize the attributes of a card
+    private String myType;
+    private boolean myColor;
 
-    /**
-     * Constructor for objects of class Card
-     */
-    public Card()
+    public Card(int number, String type, boolean color)
     {
-        // initialise instance variables
-        x = 0;
+        myNumber = number; //set variables to instance of card
+        myType = type;
+        myColor = color;
     }
 
-    /**
-     * An example of a method - replace this comment with your own
-     * 
-     * @param  y   a sample parameter for a method
-     * @return     the sum of x and y 
-     */
-    public int sampleMethod(int y)
+    /**GET VARIABLES**/
+    
+	public int getNumber()
     {
-        // put your code here
-        return x + y;
+        return myNumber;
     }
+
+    public String getType()
+    {
+        return myType;
+    }
+
+    public boolean getColor()
+    {
+        return myColor;
+    }
+
 }
