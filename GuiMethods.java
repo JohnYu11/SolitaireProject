@@ -12,16 +12,19 @@ import javax.swing.event.*;		// access to JSlider events
 
 public class GuiMethods extends JFrame
 {
-    // instance variables - replace the example below with your own
-    private int x;
+    // instance variables
+    private final static int HGap = 5;
+    private final static int VGap = 5;
+    private JTextArea textArea1, textArea2;
+    private int xPos, yPos;
 
     /**
      * Constructor for objects of class GuiMethods
      */
     public GuiMethods()
     {
-        // initialise instance variables
-        x = 0;
+        super();
+        Container contain = getContentPane();
     }
 
     /**
@@ -32,7 +35,6 @@ public class GuiMethods extends JFrame
      */
     public int sampleMethod(int y)
     {
-        // put your code here
-        return x + y;
+        
     }
 }
