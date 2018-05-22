@@ -11,7 +11,7 @@
 import java.util.*;
 public class GameTester
 {
-    public static void solitaire(String[] args)
+    public static void main(String[] args)
     {
         ArrayList<Card> deck = new ArrayList<Card>(); //creates the initial lists
         ArrayList<Card> d1 = new ArrayList<Card>();
