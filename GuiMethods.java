@@ -25,16 +25,11 @@ public class GuiMethods extends JFrame
     {
         super();
         Container contain = getContentPane();
+        contain.setLayout(new BorderLayout(HGap, VGap));
+        textArea1 = new JTextArea(2, 10);
+        textArea1.setText("Click the Mouse");
+        textArea1.setBackground(Color.BLUE);
     }
 
-    /**
-     * An example of a method - replace this comment with your own
-     * 
-     * @param  y   a sample parameter for a method
-     * @return     the sum of x and y 
-     */
-    public int sampleMethod(int y)
-    {
-        
-    }
+    
 }
