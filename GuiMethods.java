@@ -1,4 +1,3 @@
-
 /**
  * Write a description of class GuiMethods here.
  * 
@@ -8,7 +7,7 @@
 import java.awt.*;          // access to Container
 import java.awt.event.*;    // access to WindowAdapter, WindowEvent
 import javax.swing.*;       // access to JFrame and Jcomponents
-import javax.swing.event.*;		// access to JSlider events
+import javax.swing.event.*;     // access to JSlider events
 
 public class GuiMethods extends JFrame
 {
@@ -43,5 +42,13 @@ public class GuiMethods extends JFrame
         );
         setSize(500, 400);      //width= 500, height= 400
         setVisible(true);
+    }
+    public void paint(Graphics g)
+    {
+        super.paint(g);     //calls super method paint
+        g.drawString("Clicked at [" + xPos + ", " + yPos + "]", xPos, yPos);
+    }
+    public static void main(String[]args){
+        GuiMethods application = new GuiMethods();
     }
 }
