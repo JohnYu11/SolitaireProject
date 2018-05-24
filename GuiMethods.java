@@ -30,19 +30,18 @@ public class GuiMethods extends JFrame
         textArea1.setText("Click the Mouse");   //tells player to press a button
         textArea1.setEnabled(false);    //makes it so that player can't type in text area
         textArea1.setBackground(Color.BLUE);    //sets background color as blue
-        container.add(textArea1, BorderLayout.NORTH);   //adds border components 
-        container.add(textArea2, BorderLayout.SOUTH);   //adds border components
+        contain.add(textArea1, BorderLayout.NORTH);   //adds border components 
+        contain.add(textArea2, BorderLayout.SOUTH);   //adds border components
         addKeyListener(new KeyHandler());
         addMouseListener(new MouseClickHandler());
-        addWindowListener(new java.awt.event.WindowAdapter(){
-            public void windowClosing(WindowEvent evt){
-                System.exit(0);
+        addWindowListener(new java.awt.event.WindowAdapter()
+            {
+                public void windowClosing(WindowEvent evt){
+                    System.exit(0);
+                }
             }
-         });
+        );
         setSize(500, 400);      //width= 500, height= 400
         setVisible(true);
     }
-    }
-
-    
 }
