@@ -13,22 +13,35 @@ import javax.swing.event.*;		// access to JSlider events
 public class GuiMethods extends JFrame
 {
     // instance variables
-    private final static int HGap = 5;
-    private final static int VGap = 5;
-    private JTextArea textArea1, textArea2;
-    private int xPos, yPos;
+    private final static int HGap = 5;      //horizontal gap
+    private final static int VGap = 5;      //vertical gap
+    private JTextArea textArea1, textArea2;     //objects of JTextArea type
+    private int xPos, yPos;     //position of mouse
 
     /**
-     * Constructor for objects of class GuiMethods
+     * Constructs a new instance of GuiMethods
      */
     public GuiMethods()
     {
-        super();
-        Container contain = getContentPane();
-        contain.setLayout(new BorderLayout(HGap, VGap));
-        textArea1 = new JTextArea(2, 10);
-        textArea1.setText("Click the Mouse");
-        textArea1.setBackground(Color.BLUE);
+        super();    //calls super
+        Container contain = getContentPane();   //creates an object for a method
+        contain.setLayout(new BorderLayout(HGap, VGap));    //sets BorderLayout; gaps between components >= 0
+        textArea1 = new JTextArea(2, 10);       //text area size 2 x 10
+        textArea1.setText("Click the Mouse");   //tells player to press a button
+        textArea1.setEnabled(false);    //makes it so that player can't type in text area
+        textArea1.setBackground(Color.BLUE);    //sets background color as blue
+        container.add(textArea1, BorderLayout.NORTH);   //adds border components 
+        container.add(textArea2, BorderLayout.SOUTH);   //adds border components
+        addKeyListener(new KeyHandler());
+        addMouseListener(new MouseClickHandler());
+        addWindowListener(new java.awt.event.WindowAdapter(){
+            public void windowClosing(WindowEvent evt){
+                System.exit(0);
+            }
+         });
+        setSize(500, 400);      //width= 500, height= 400
+        setVisible(true);
+    }
     }
 
     
