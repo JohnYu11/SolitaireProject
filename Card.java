@@ -52,7 +52,7 @@ public class Card
      */
     public String getFileName()
     {
-        if (!isFaceUp)return "back.gif"; //using escape sequence, not double slash
+        if (!isFaceUp)return "backcard.gif"; //using escape sequence, not double slash
         if (rank == 10) return "t" + suit + ".gif";
         if (rank == 11) return "j" + suit + ".gif";
         if (rank == 12) return "q" + suit + ".gif";
