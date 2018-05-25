@@ -9,55 +9,48 @@ import java.awt.event.*;    // access to WindowAdapter, WindowEvent
 import javax.swing.*;       // access to JFrame and Jcomponents
 import javax.swing.event.*;     // access to JSlider events
 
-public class GuiMethods extends JFrame
+public class GuiMethods extends JComponent 
 {
     // instance variables
-    private final static int numRow = 14;      //horizontal gap
-    private final static int numCol = 9;      //vertical gap
-    
-    private JTextArea textArea1, textArea2;     //objects of JTextArea type
-    private int xPos, yPos;     //position of mouse
+    private static final int CARD_WIDTH = 73;
+	private static final int CARD_HEIGHT = 97;
+	private static final int SPACING = 5;  //distance between cards
+	private static final int FACE_UP_OFFSET = 15;  //distance for cascading face-up cards
+	private static final int FACE_DOWN_OFFSET = 5;  //distance for cascading face-down cards
+
+	private JFrame frame;
+	private int selectedRow = -1;
+	private int selectedCol = -1;
+	private Game game;
+
 
     /**
-     * Constructs a new game grid
+     * Constructs a new instance of GuiMethods
      */
     public GuiMethods()
     {
-        super();    //calls super
-        Container contain = getContentPane();   //creates an object for a method
-        contain.setLayout(new GridLayout(numRow, numCol));    //sets BorderLayout; gaps between components >= 0
-        
-        textArea1 = new JTextArea(2, 10);       //text area size 2 x 10
-        textArea1.setText("Click the Mouse");   //tells player to press a button
-        textArea1.setEnabled(false);    //makes it so that player can't type in text area
-        textArea1.setBackground(Color.BLUE);    //sets background color as blue
-        
-        contain.add(textArea1);   //adds border components 
-        contain.add(textArea2, GridLayout.SOUTH);   //adds border components
-        
-        addKeyListener(new KeyHandler());
-        addMouseListener(new MouseClickHandler());
-        
-        addWindowListener(new java.awt.event.WindowAdapter()
-            {
-                public void windowClosing(WindowEvent evt){
-                    System.exit(0);
-                }
-            }
-        );
-        
-        setSize(500, 400);      //width= 500, height= 400
-        setVisible(true);
+        this.game = game;
+
+		frame = new JFrame("Solitaire");
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().add(this);
+
+		this.setPreferredSize(new Dimension(CARD_WIDTH * 7 + SPACING * 8, CARD_HEIGHT * 2 + SPACING * 3 + FACE_DOWN_OFFSET * 7 + 13 * FACE_UP_OFFSET));
+
+
+		frame.pack();
+		frame.setVisible(true);
     }
-    /** METHOD EXPLINATION HERE **/
     public void paint(Graphics g)
     {
-        super.paint(g);     //calls super method paint
-        g.drawString("Clicked at [" + xPos + ", " + yPos + "]", xPos, yPos);
+       
     }
-    /** METHOD EXPLINATION HERE **/
-    public static void main(String[]args)
-    {
+    public static void main(String[]args){
         GuiMethods application = new GuiMethods();
     }
+    public void paintComponent(Graphics g)
+	{
+		g.setColor(new Color(128, 0, 0));
+		g.fillRect(0, 0, getWidth(), getHeight());
+	}
 }
