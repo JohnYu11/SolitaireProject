@@ -44,9 +44,21 @@ public class Card
 	faceUp=true; 
     }
 	
+    /**
+     *Finds appropriate file name for gif corresponding to card based
+     * on suit and rank
+     *
+     * @return name of the file for the appropriate Card
+     */
     public String getFileName()
     {
-	    
-    }	    
+        if (!isFaceUp)return "back.gif"; //using escape sequence, not double slash
+        if (rank == 10) return "t" + suit + ".gif";
+        if (rank == 11) return "j" + suit + ".gif";
+        if (rank == 12) return "q" + suit + ".gif";
+        if (rank == 13) return "k" + suit + ".gif";
+        if (rank == 1) return "a" + suit + ".gif";
+        return rank + suit + ".gif";
+    }    
 	    
 }
