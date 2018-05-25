@@ -49,7 +49,7 @@ public class Card
 	return  isFaceUp;  
     }	    
 	
-    //red color
+    //if black color
     public boolean isBlack()
     {
     	return (mySuit.equals("s") || mySuit.equals("c")); 	    
