@@ -41,6 +41,6 @@ public class Card
 	
     public void isFaceUp()
     {
-	    faceUp=true; 
+	faceUp=true; 
     }
 }
