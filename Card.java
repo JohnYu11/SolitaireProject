@@ -13,14 +13,13 @@
 public class Card
 {
     private int myNumber; //initialize the attributes of a card
-    private String myType;
-    private boolean myColor;
+    private String mySuit;
+    private boolean faceUp; //true if faceUp, false otherwise	
 
-    public Card(int number, String type, boolean color)
+    public Card(int number, String suit)
     {
         myNumber = number; //set variables to instance of card
-        myType = type;
-        myColor = color;
+        mySuit = suit;
     }
 
     /**GET VARIABLES**/
@@ -34,10 +33,14 @@ public class Card
     {
         return myType;
     }
-
-    public boolean getColor()
+ 
+    public void isFaceDown()
     {
-        return myColor;
+	faceUp= false; 
     }
-
+	
+    public void isFaceUp()
+    {
+	    faceUp=true; 
+    }
 }
