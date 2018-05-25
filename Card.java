@@ -43,4 +43,10 @@ public class Card
     {
 	faceUp=true; 
     }
+	
+    public String getFileName()
+    {
+	    
+    }	    
+	    
 }
