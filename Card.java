@@ -20,11 +20,12 @@ public class Card
     {
         myNumber = number; //set variables to instance of card
         mySuit = suit;
+	faceUp = false;    
     }
 
     /**GET VARIABLES**/
     
-	public int getNumber()
+    public int getNumber()
     {
         return myNumber;
     }
@@ -33,16 +34,20 @@ public class Card
     {
         return myType;
     }
- 
-    public void isFaceDown()
+ // card face methods
+    public void turnFaceDown()
     {
-	faceUp= false; 
+	faceUp = false; 
     }
 	
-    public void isFaceUp()
+    public void turnFaceUp()
     {
-	faceUp=true; 
+	faceUp = true; 
     }
+    public boolean isFaceUp()
+    {
+	return  isFaceUp;  
+    }	    
 	
     /**
      *Finds appropriate file name for gif corresponding to card based
