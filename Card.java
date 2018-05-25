@@ -1,7 +1,7 @@
 
 /**
  * FINAL PROJECT
- * Fiona Harrington
+ * John YU, Varshini Sathish
  * 4/26/2018
  * 
  * Description: This class represents the attributes 
@@ -53,7 +53,8 @@ public class Card
     public boolean isBlack()
     {
     	return (mySuit.equals("s") || mySuit.equals("c")); 	    
-    }	    
+    }	 
+	
     /**
      *Finds appropriate file name for gif corresponding to card based
      * on suit and rank
