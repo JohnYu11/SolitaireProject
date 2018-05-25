@@ -49,6 +49,11 @@ public class Card
 	return  isFaceUp;  
     }	    
 	
+    //red color
+    public boolean isBlack()
+    {
+    	return (mySuit.equals("s") || mySuit.equals("c")); 	    
+    }	    
     /**
      *Finds appropriate file name for gif corresponding to card based
      * on suit and rank
