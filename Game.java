@@ -9,6 +9,10 @@
 import java.util.*;
 public class Game
 {
+    public static void main(String[]args){
+        new Game();
+        
+    }
     private Stack<Card>[]foundation;
     //the array for the stacks for the 4 suit piles
     private Stack<Card>[] tableau;
@@ -43,7 +47,7 @@ public class Game
         //creates a single pile for the hand pile
         talon = new Stack<Card>();
         //creates a single pile for the unused cards
-        gui = new GuiMethods();
+        gui = new GuiMethods(this);
         //calls on GuiMethods class
         hand = makeHand();
         deal();    
@@ -51,6 +55,7 @@ public class Game
         moves = 0; //declares the initial # of moves
     }
 
+    
     public Stack<Card> makeHand()
     {
         ArrayList<Card> deck = new ArrayList<Card>();
@@ -93,7 +98,7 @@ public class Game
         }
         return hand;    //returns the randomized hand
     }
-    
+
     public void deal()
     {
         for(int k = 0; k < tableau.length; k++)
@@ -112,6 +117,185 @@ public class Game
             //looks at last card in tableau at index k and turns up
         }
     }
+
+    public Card getFoundation(int k){
+        if(foundation[k].isEmpty()){
+            return null;
+        }
+        return foundation[k].peek();
+    }
+
+    public Stack<Card> getTableau(int k)
+    {
+        return tableau[k];
+    }
+
+    public Card getTalon(){
+        if(talon.size() == 0)
+        {
+            return null;
+        }
+        return talon.peek();
+    }
+
+    public Card getHand(){
+        if(hand.size() == 0){
+            return null;
+        }
+        return hand.peek();
+    }
+
+    public void giveCard()
+    {
+        for(int k = 0; k < 3; k++){
+            if(!hand.isEmpty())
+            {
+                Card temp = hand.pop();
+                talon.push(temp);
+                temp.turnFaceUp();
+            }
+        }
+    }
+
+    public void resetHand()
+    {
+        while(!talon.isEmpty())
+        {
+            Card temp = talon.pop();
+            temp.turnFaceDown();
+            hand.push(temp);
+        }
+    }
+
+    public void handPressed(){
+        System.out.println("You pressed the hand pile");
+        gui.unselect();
+        if(!gui.isTalonSelected()&&!gui.isTableauSelected())
+        {
+            if(hand.isEmpty())
+                resetHand();
+            else 
+                giveCard();
+        }
+    }
+
+    public void talonPressed(){
+        System.out.print("You pressed the talon pile");
+        if(!talon.isEmpty())
+        {
+            if(!gui.isTalonSelected()) 
+                gui.selectTalon();
+            else
+                gui.unselect();
+        }
+    }
+
+    public void foundationPressed(int k){
+        System.out.println("foundation #" + k + "pressed");
+        if(gui.isTalonSelected())
+        {
+            if(canAddToFoundation(talon.peek(), k))
+            {
+                Card temp = talon.pop();
+                foundation[k].push(temp);
+                gui.unselect();
+            }
+        }
+        if(gui.isTableauSelected())
+        {
+            Stack<Card> selectedTableau = tableau[gui.selectedTableau()];
+            if(canAddToFoundation(selectedTableau.peek(), k))
+            {
+                Card temp = selectedTableau.pop();
+                foundation[k].push(temp);
+                if(!selectedTableau.isEmpty())
+                { 
+                    selectedTableau.peek().turnFaceUp();
+                }
+                gui.unselect();
+            }
+        }
+    }
+
+    public void tableauPressed(int k){
+        System.out.println("tableau#" + k + " pressed");
+        if(gui.isTalonSelected()){
+            Card temp = talon.peek();
+            if(canAddToTableau(temp, k)){
+                tableau[k].push(talon.pop());
+                tableau[k].peek().turnFaceUp();
+            }
+            gui.unselect();
+            gui.selectTableau(k);
+        }
+        else if(gui.isTableauSelected()){
+            int lastTableau = gui.selectedTableau();
+            if(k != lastTableau)
+            {
+                Stack<Card> temp = removeFaceUpCards(lastTableau);
+                if(canAddToTableau(temp.peek(), k))
+                {
+                    addToTableau(temp,k);
+                    if(!tableau[lastTableau].isEmpty()){
+                        tableau[lastTableau].peek().turnFaceUp();
+
+                    }
+                    gui.unselect();
+                }
+                else{
+                    addToTableau(temp, lastTableau);
+                    gui.unselect();
+                    gui.selectTableau(k);
+                }
+            }
+            else{
+                gui.unselect();
+            }
+        }
+        else{
+            gui.selectTableau(k);
+            tableau[k].peek().turnFaceUp();
+        }
+    }
+
+    private boolean canAddToTableau(Card c, int k)
+    {
+        Stack<Card> pile = tableau[k];
+        if(pile.isEmpty())
+            return(c.getNumber() == 13);
+        Card top = pile.peek();
+        if(!top.isFaceUp())
+            return false;
+        return (c.isBlack() != top.isBlack())&&
+        (c.getNumber() == top.getNumber()-1);
+    }
+
+    private Stack<Card> removeFaceUpCards(int k){
+        Stack<Card> card = new Stack<Card>();
+        while(!tableau[k].isEmpty() && tableau[k].peek().isFaceUp())
+        {
+            card.push(tableau[k].pop());
+        }
+        return card;
+    }
+
+    private void addToTableau(Stack<Card> c, int k)
+    {
+        while (!c.isEmpty())
+        {
+            tableau[k].push(c.pop());
+        }
+    }
+
+    private boolean canAddToFoundation(Card c, int k)
+    {
+        if (foundation[k].isEmpty()) 
+            return (c.getNumber() == 1);
+        Card temp = foundation[k].peek();
+        return (temp.getNumber() + 1 == c.getNumber())
+        && (temp.getSuit().equals(c.getSuit()));
+    }
+
     /**checks if user has made a valid move*/
     public boolean canMove()
     {
