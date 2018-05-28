@@ -28,6 +28,10 @@ public class Card
     {
         return myNumber;
     }
+    
+    public String getSuit(){
+        return mySuit;
+    }
 
     // card face methods
     public void turnFaceDown()
@@ -42,7 +46,7 @@ public class Card
 
     public boolean isFaceUp()
     {
-        return  faceUp;  
+        return faceUp;  
     }       
 
     //if black color
