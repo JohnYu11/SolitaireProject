@@ -12,7 +12,7 @@ import java.io.*;           //access to input/output
 import javax.swing.*;       // access to JFrame and Jcomponents
 import java.util.*;
 
-public class GuiMethodsMain extends JComponent implements MouseListener
+public class GuiMethods extends JComponent implements MouseListener
 {
     // instance variables
     private static final int cardwide = 70;
@@ -29,7 +29,7 @@ public class GuiMethodsMain extends JComponent implements MouseListener
     /**
      * Constructs a new instance of GuiMethods
      */
-    public GuiMethodsMain(Game game)
+    public GuiMethods(Game game)
     {
         this.game = game;
 
@@ -134,11 +134,11 @@ public class GuiMethodsMain extends JComponent implements MouseListener
 
         if (row == 0 && col == 0)
             game.handPressed();
-        else if (row == 0 && col == 1)
+        else if (row == 2 && col == 0)
             game.talonPressed();
-        else if (row == 0 && col >= 3)
+        else if (row == 0 && col == 9)
             game.foundationPressed(col - 3);
-        else if (row == 1)
+        else if (row == 0 && col >= 2 && col <= 8)
             game.tableauPressed(col);
         repaint();
     }
@@ -162,7 +162,7 @@ public class GuiMethodsMain extends JComponent implements MouseListener
 
     public boolean isTableauSelected()
     {
-        return selectedRow == 0;
+        return selectedRow == 0 && selectedCol >= 2 && selectedCol <= 8;
     }
 
     public int selectedTableau()
