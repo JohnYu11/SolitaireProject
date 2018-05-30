@@ -16,15 +16,15 @@ import apcslib.*;
 public class GuiMethods extends JComponent implements MouseListener
 {
     // instance variables
-    private static final int cardwide = 70;
-    private static final int cardhigh = 95;
+    private static final int cardwide = 70; //card width
+    private static final int cardhigh = 95; //card height
     private static final int space = 30;  //distance between cards
     private static final int up_offset = 20;  //distance for cascading face-up cards
     private static final int down_offset = 10;  //distance for cascading face-down cards
 
     private JFrame frame;   //creates object for JFrame
-    private int selectedRow = -1;
-    private int selectedCol = -1;
+    private int selectedRow = -1;   //default row selected is none
+    private int selectedCol = -1;   //default col selected is none
     private Game game;  //creates object for game class
 
     /**
@@ -32,17 +32,16 @@ public class GuiMethods extends JComponent implements MouseListener
      */
     public GuiMethods(Game game)
     {
-        this.game = game;
+        this.game = game;   //creates an instance of game that is this game
+        frame = new JFrame("Solitaire");    //the name of the application at the top
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);   //allows the application to be closed
+        frame.getContentPane().add(this);   //adds the game to the window
 
-        frame = new JFrame("Solitaire");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().add(this);
+        this.setPreferredSize(new Dimension(930, 620)); //the size of the window is 930*620
+        this.addMouseListener(this);    //adds a mouse listener
 
-        this.setPreferredSize(new Dimension(930, 620));
-        this.addMouseListener(this);
-
-        frame.pack();
-        frame.setVisible(true);
+        frame.pack();   //makes the elements fit inside the window size
+        frame.setVisible(true);     //allows the window to be visible
     }
 
     public void paint(Graphics g)
@@ -175,38 +174,38 @@ public class GuiMethods extends JComponent implements MouseListener
     }
 
     public void unselect()
-	{
-		selectedRow = -1;
-		selectedCol = -1;
-	}
+    {
+        selectedRow = -1;
+        selectedCol = -1;
+    }
 
-	public boolean isTalonSelected()
-	{
-		return selectedRow == 0 && selectedCol == 1;
-	}
+    public boolean isTalonSelected()
+    {
+        return selectedRow == 0 && selectedCol == 1;
+    }
 
-	public void selectTalon()
-	{
-		selectedRow = 0;
-		selectedCol = 1;
-	}
+    public void selectTalon()
+    {
+        selectedRow = 0;
+        selectedCol = 1;
+    }
 
-	public boolean isTableauSelected()
-	{
-		return selectedRow == 1;
-	}
+    public boolean isTableauSelected()
+    {
+        return selectedRow == 1;
+    }
 
-	public int selectedTableau()
-	{
-		if (selectedRow == 1)
-			return selectedCol;
-		else
-			return -1;
-	}
+    public int selectedTableau()
+    {
+        if (selectedRow == 1)
+            return selectedCol;
+        else
+            return -1;
+    }
 
-	public void selectTableau(int index)
-	{
-		selectedRow = 1;
-		selectedCol = index;
-	}
+    public void selectTableau(int index)
+    {
+        selectedRow = 1;
+        selectedCol = index;
+    }
 }
