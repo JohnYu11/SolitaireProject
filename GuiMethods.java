@@ -23,7 +23,6 @@ public class GuiMethods extends JComponent implements MouseListener
     private static final int down_offset = 10;  //distance for cascading face-down cards
 
     private JFrame frame;   //creates object for JFrame
-    private int row, col;
     private int selectedRow = -1;
     private int selectedCol = -1;
     private Game game;  //creates object for game class
@@ -127,30 +126,32 @@ public class GuiMethods extends JComponent implements MouseListener
         //none selected previously
         double xPos = e.getX();
         double yPos = e.getY();
+        int col = 0;
+        int row = 0;
         //finds the column for tableau
         if((xPos>=130)&&(xPos<=200))
-            col = 1;
+            col = 0;
         if((xPos>=230)&&(xPos<=300))
-            col = 2;
+            col = 1;
         if((xPos>=330)&&(xPos<=400))
-            col = 3;
+            col = 2;
         if((xPos>=430)&&(xPos<=500))
-            col = 4;
+            col = 3;
         if((xPos>=530)&&(xPos<=600))
-            col = 5;
+            col = 4;
         if((xPos>=630)&&(xPos<=700))
-            col = 6;
+            col = 5;
         if((xPos>=730)&&(xPos<=800))
-            col = 7;
+            col = 6;
         //find the row for foundation
         if((yPos>=30)&&(yPos<=125))
-            row = 1;
+            row = 0;
         if((yPos>=185)&&(yPos<=280))
-            row = 2;
+            row = 1;
         if((yPos>=340)&&(yPos<=435))
-            row = 3;
+            row = 2;
         if((yPos>=495)&&(yPos<=590))
-            row = 4;
+            row = 3;
         if ((xPos>=15)&&(xPos<=85)&&(yPos>=30)&&(yPos<=125))
         {
             game.handPressed();
@@ -171,37 +172,38 @@ public class GuiMethods extends JComponent implements MouseListener
     }
 
     public void unselect()
-    {
-        selectedRow = -1;
-        selectedCol = -1;
-    }
+	{
+		selectedRow = -1;
+		selectedCol = -1;
+	}
 
-    public boolean isTalonSelected()
-    {
-        return selectedRow == 2 && selectedCol == 0;
-    }
+	public boolean isTalonSelected()
+	{
+		return selectedRow == 0 && selectedCol == 1;
+	}
 
-    public void selectTalon()
-    {
-        selectedRow = 2;
-        selectedCol = 0;
-    }
+	public void selectTalon()
+	{
+		selectedRow = 0;
+		selectedCol = 1;
+	}
 
-    public boolean isTableauSelected()
-    {
-        return selectedCol >= 1 && selectedCol <= 7 && selectedRow>0;
-    }
+	public boolean isTableauSelected()
+	{
+		return selectedRow == 1;
+	}
 
-    public int selectedTableau()
-    {
-        if (selectedCol >= 1 && selectedCol <= 7 && selectedRow>0)
-            return selectedCol;
-        else
-            return -1;
-    }
+	public int selectedTableau()
+	{
+		if (selectedRow == 1)
+			return selectedCol;
+		else
+			return -1;
+	}
 
-    public void selectTableau(int k)
-    {
-        selectedCol = k;
-    }
+	public void selectTableau(int index)
+	{
+		selectedRow = 1;
+		selectedCol = index;
+	}
 }
