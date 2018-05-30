@@ -49,6 +49,9 @@ public class GuiMethods extends JComponent implements MouseListener
     {
         g.setColor(new Color(81, 2, 39));
         g.fillRect(cardwide+(space), 0, getWidth()-2*(space+cardwide), getHeight());
+        g.setColor(new Color(209,184,191));
+        g.fillRect(0, 0, cardwide+(space), getHeight());
+        g.fillRect(cardwide+(space)+getWidth()-2*(space+cardwide), 0, cardwide+(space), getHeight());
         //hand
         drawCard(g, game.getHand(), space/2 , space);
 
