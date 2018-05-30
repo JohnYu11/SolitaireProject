@@ -11,17 +11,19 @@ import java.awt.event.*;    // access to WindowAdapter, WindowEvent
 import java.io.*;           //access to input/output
 import javax.swing.*;       // access to JFrame and Jcomponents
 import java.util.*;
+import apcslib.*;
 
 public class GuiMethods extends JComponent implements MouseListener
 {
     // instance variables
     private static final int cardwide = 70;
     private static final int cardhigh = 95;
-    private static final int space = 10;  //distance between cards
+    private static final int space = 30;  //distance between cards
     private static final int up_offset = 20;  //distance for cascading face-up cards
     private static final int down_offset = 10;  //distance for cascading face-down cards
 
     private JFrame frame;   //creates object for JFrame
+    private int row, col;
     private int selectedRow = -1;
     private int selectedCol = -1;
     private Game game;  //creates object for game class
@@ -37,9 +39,7 @@ public class GuiMethods extends JComponent implements MouseListener
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().add(this);
 
-        this.setPreferredSize(new Dimension(cardwide * 12 + 
-                space * 12, cardhigh * 2 + space * 3 
-                + down_offset * 7 + 13 * up_offset));
+        this.setPreferredSize(new Dimension(930, 620));
         this.addMouseListener(this);
 
         frame.pack();
@@ -49,18 +49,18 @@ public class GuiMethods extends JComponent implements MouseListener
     public void paint(Graphics g)
     {
         g.setColor(new Color(81, 2, 39));
-        g.fillRect(cardwide+space, 0, getWidth()- 2*(space + cardwide), getHeight());
+        g.fillRect(cardwide+(space), 0, getWidth()-2*(space+cardwide), getHeight());
         //hand
-        drawCard(g, game.getHand(), space, space);
+        drawCard(g, game.getHand(), space/2 , space);
 
         //talon
-        drawCard(g, game.getTalon(), space, space * 7 + cardhigh);
+        drawCard(g, game.getTalon(), space/2, space+(cardhigh + 2 * space));
         if (selectedRow == 0 && selectedCol == 1)
-            drawBorder(g, space * 2 + cardwide, space);
+            drawBorder(g, space/2, space+(cardhigh + 2 * space));
 
         //foundation
         for (int k = 0; k < 4; k++)
-            drawCard(g, game.getFoundation(k), getWidth()-(cardwide+2*space),(cardhigh+2*space));
+            drawCard(g, game.getFoundation(k), getWidth()-(space/2)-cardwide,space+(cardhigh + 2 * space)*k);
 
         //tableau
         for (int n = 0; n < 7; n++)
@@ -69,9 +69,9 @@ public class GuiMethods extends JComponent implements MouseListener
             int offset = 0;
             for (int j = 0; j < pile.size(); j++)
             {
-                drawCard(g, pile.get(j), 11* space + ((cardwide) + space * 4) * n, cardhigh + 2 * space + offset);
+                drawCard(g, pile.get(j),space+(cardwide+space)*(n+1), space + offset);
                 if (selectedRow == 1 && selectedCol == n && j == pile.size() - 1)
-                    drawBorder(g, 11* space + ((cardwide) + space * 4) * n, cardhigh + 2 * space + offset);
+                    drawBorder(g, space+(cardwide+space)*(n+1), space + offset);
 
                 if (pile.get(j).isFaceUp())
                     offset += up_offset;
@@ -125,21 +125,48 @@ public class GuiMethods extends JComponent implements MouseListener
     public void mouseClicked(MouseEvent e)
     {
         //none selected previously
-        int col = e.getX() / (space + cardwide);
-        int row = e.getY() / (space + cardhigh);
-        if (row > 1)
-            row = 1;
-        if (col > 6)
+        double xPos = e.getX();
+        double yPos = e.getY();
+        //finds the column for tableau
+        if((xPos>=130)&&(xPos<=200))
+            col = 1;
+        if((xPos>=230)&&(xPos<=300))
+            col = 2;
+        if((xPos>=330)&&(xPos<=400))
+            col = 3;
+        if((xPos>=430)&&(xPos<=500))
+            col = 4;
+        if((xPos>=530)&&(xPos<=600))
+            col = 5;
+        if((xPos>=630)&&(xPos<=700))
             col = 6;
-
-        if (row == 0 && col == 0)
+        if((xPos>=730)&&(xPos<=800))
+            col = 7;
+        //find the row for foundation
+        if((yPos>=30)&&(yPos<=125))
+            row = 1;
+        if((yPos>=185)&&(yPos<=280))
+            row = 2;
+        if((yPos>=340)&&(yPos<=435))
+            row = 3;
+        if((yPos>=495)&&(yPos<=590))
+            row = 4;
+        if ((xPos>=15)&&(xPos<=85)&&(yPos>=30)&&(yPos<=125))
+        {
             game.handPressed();
-        else if (row == 2 && col == 0)
+        }
+        else if ((xPos>=15)&&(xPos<=85)&&(yPos<=250)&&(yPos>=155))
+        {
             game.talonPressed();
-        else if (row == 0 && col == 9)
-            game.foundationPressed(col - 3);
-        else if (row == 0 && col >= 2 && col <= 8)
+        }
+        else if ((xPos>=845)&&(xPos<=915))
+        {
+            game.foundationPressed(row);
+        }
+        else if ((xPos>=130)&&(xPos<=800))
+        {
             game.tableauPressed(col);
+        }
         repaint();
     }
 
@@ -151,23 +178,23 @@ public class GuiMethods extends JComponent implements MouseListener
 
     public boolean isTalonSelected()
     {
-        return selectedRow == 0 && selectedCol == 1;
+        return selectedRow == 2 && selectedCol == 0;
     }
 
     public void selectTalon()
     {
-        selectedRow = 0;
-        selectedCol = 1;
+        selectedRow = 2;
+        selectedCol = 0;
     }
 
     public boolean isTableauSelected()
     {
-        return selectedRow == 0 && selectedCol >= 2 && selectedCol <= 8;
+        return selectedCol >= 1 && selectedCol <= 7 && selectedRow>0;
     }
 
     public int selectedTableau()
     {
-        if (selectedRow == 1)
+        if (selectedCol >= 1 && selectedCol <= 7 && selectedRow>0)
             return selectedCol;
         else
             return -1;
@@ -175,7 +202,6 @@ public class GuiMethods extends JComponent implements MouseListener
 
     public void selectTableau(int k)
     {
-        selectedRow = 1;
         selectedCol = k;
     }
 }
