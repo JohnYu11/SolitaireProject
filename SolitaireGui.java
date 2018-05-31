@@ -1,6 +1,6 @@
 /**
  * FINAL PROJECT
- * Fiona Harrington and John Yu
+ * Fiona Harrington, Varshini Sathish, John Yu
  * 5/7/2018
  * Description: allows the user to move around cards on the board and
  * play the game under the given rules.
@@ -78,7 +78,7 @@ public class Game
                 }
                 Card temp = new Card(n, suit);
                 //creates a card with certain specifications into deck
-                deck.add(temp);
+                deck.add(temp); //adds cards to deck
             }
         }
         Stack<Card> hand = new Stack<Card>();
@@ -171,7 +171,7 @@ public class Game
     public void handPressed(){
         System.out.println("You pressed the hand pile");
         gui.unselect();
-        if(!gui.isTalonSelected()&&!gui.isTableauSelected())
+        if(!gui.isTalonSelected()&&!gui.isTableauSelected()) //
         {
             if(hand.isEmpty())
                 resetHand();
