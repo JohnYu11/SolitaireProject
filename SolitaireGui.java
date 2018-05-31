@@ -207,7 +207,7 @@ public class Game
             Stack<Card> selectedTableau = tableau[gui.selectedTableau()];       
             if(canAddToFoundation(selectedTableau.peek(), k))       //checks to see if card can be added to foundation
             {
-                Card temp = selectedTableau.pop();
+                Card temp = selectedTableau.pop();       //removes a card from the selected tableau and returns it to temp
                 foundation[k].push(temp);
                 if(!selectedTableau.isEmpty())
                 { 
