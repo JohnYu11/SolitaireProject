@@ -160,16 +160,16 @@ public class Game
 
     public void resetHand()
     {
-        while(!talon.isEmpty())         //
+        while(!talon.isEmpty())         //while there are still cards in talon
         {
-            Card temp = talon.pop();
-            temp.turnFaceDown();
-            hand.push(temp);
+            Card temp = talon.pop();    //removes a card from the talon pile and returns it to temp
+            temp.turnFaceDown();        //turn top card face dowm
+            hand.push(temp);            
         }
     }
 
     public void handPressed(){
-        System.out.println("You pressed the hand pile");
+        System.out.println("You pressed the hand pile");    
         gui.unselect();
         if(!gui.isTalonSelected()&&!gui.isTableauSelected()) 
         {
@@ -195,17 +195,17 @@ public class Game
         System.out.println("foundation #" + k + "pressed");
         if(gui.isTalonSelected())
         {
-            if(canAddToFoundation(talon.peek(), k))
+            if(canAddToFoundation(talon.peek(), k))     //checks to see if card can be added to foundation (far right w/aces)
             {
                 Card temp = talon.pop();
-                foundation[k].push(temp);
-                gui.unselect();
+                foundation[k].push(temp);               //add the new card to the foundation
+                gui.unselect();                         //unselect the card
             }
         }
-        if(gui.isTableauSelected())
+        if(gui.isTableauSelected())                     //if user wants card to be added to tableau
         {
-            Stack<Card> selectedTableau = tableau[gui.selectedTableau()];
-            if(canAddToFoundation(selectedTableau.peek(), k))
+            Stack<Card> selectedTableau = tableau[gui.selectedTableau()];       
+            if(canAddToFoundation(selectedTableau.peek(), k))       //checks to see if card can be added to foundation
             {
                 Card temp = selectedTableau.pop();
                 foundation[k].push(temp);
