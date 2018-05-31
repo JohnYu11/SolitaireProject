@@ -146,21 +146,21 @@ public class Game
         return hand.peek();     //gets the last card in the hand
     }
 
-    public void giveCard()
+    public void giveCard()      //from the new card pile
     {
         for(int k = 0; k < 3; k++){
             if(!hand.isEmpty())
             {
                 Card temp = hand.pop();     //removes a card from the hand pile and returns it to temp
                 talon.push(temp);
-                temp.turnFaceUp();
+                temp.turnFaceUp();      
             }
         }
     }
 
     public void resetHand()
     {
-        while(!talon.isEmpty())
+        while(!talon.isEmpty())         //
         {
             Card temp = talon.pop();
             temp.turnFaceDown();
@@ -171,23 +171,23 @@ public class Game
     public void handPressed(){
         System.out.println("You pressed the hand pile");
         gui.unselect();
-        if(!gui.isTalonSelected()&&!gui.isTableauSelected()) //
+        if(!gui.isTalonSelected()&&!gui.isTableauSelected()) 
         {
-            if(hand.isEmpty())
-                resetHand();
+            if(hand.isEmpty())      //if user went through all the cards
+                resetHand();        //reset new card pile (in the same order as before)
             else 
-                giveCard();
+                giveCard();         //if there are cards left, give top card
         }
     }
 
     public void talonPressed(){
         System.out.print("You pressed the talon pile");
-        if(!talon.isEmpty())
+        if(!talon.isEmpty())                //if there are more cards
         {
-            if(!gui.isTalonSelected()) 
+            if(!gui.isTalonSelected())      //if it is unselected, select the card
                 gui.selectTalon();
             else
-                gui.unselect();
+                gui.unselect();             //if already selected, unselect
         }
     }
 
