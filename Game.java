@@ -24,7 +24,6 @@ public class Game
     //creates an object for SolitaireGui class
     public int moves;
     //the # of moves taken so far
-    private MenuGui mui;
     /**
      * Game Constructor
      *
