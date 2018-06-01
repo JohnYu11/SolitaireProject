@@ -1,321 +1,210 @@
 /**
  * FINAL PROJECT
- * Fiona Harrington, Varshini Sathish, John Yu
+ * John Yu
  * 5/7/2018
- * Description: allows the user to move around cards on the board and
- * play the game under the given rules.
- * Purpose: to facilitate the playing of the game.
+ * Description: Creates the panel and other graphical objects of the
+ *              User Interface that allows for the game to be played.
+ * Purpose: Makes it possible for the player to play the game.
  */
+import java.awt.*;          // access to Container
+import java.awt.event.*;    // access to WindowAdapter, WindowEvent
+import java.io.*;           //access to input/output
+import javax.swing.*;       // access to JFrame and Jcomponents
 import java.util.*;
-public class Game
+
+public class SolitaireGui extends JComponent implements MouseListener
 {
-    public static void main(String[]args){
-        new Game(); //creates an instance of the game
-    }
-    private Stack<Card>[]foundation;
-    //the array for the stacks for the 4 suit piles
-    private Stack<Card>[] tableau;
-    //the array for the stacks for the 7 random piles
-    private Stack<Card> hand;
-    //the stack for the free cards
-    private Stack<Card> talon;
-    //the stack for the unused free cards
-    private SolitaireGui gui;
-    //creates an object for SolitaireGui class
-    public int moves;
-    //the # of moves taken so far
-    private MenuGui mui;
+    // instance variables
+    private static final int cardwide = 70; //card width
+    private static final int cardhigh = 95; //card height
+    private static final int space = 30;  //distance between cards
+    private static final int up_offset = 20;  //distance for cascading face-up cards
+    private static final int down_offset = 10;  //distance for cascading face-down cards
+
+    private JFrame frame;   //creates object for JFrame
+    private int selectedRow = -1;   //default row selected is none
+    private int selectedCol = -1;   //default col selected is none
+    private Game game;  //creates object for game class
+
     /**
-     * Game Constructor
-     *
+     * Constructs a new instance of GuiMethods
      */
-    public Game()
+    public SolitaireGui(Game game)
     {
-        foundation = new Stack[4];
-        //creates foundation stack of size 4
-        for(int k = 0; k < foundation.length; k++){
-            foundation[k] = new Stack();
-            //sets each array space as a new stack
-        }
-        tableau = new Stack[7];
-        //creates tableau stack of size 7
-        for(int n = 0; n < tableau.length; n++){
-            tableau[n] = new Stack();
-            //sets each array space as a new stack
-        }
-        hand = new Stack<Card>();
-        //creates a single pile for the hand pile
-        talon = new Stack<Card>();
-        //creates a single pile for the unused cards
-        gui = new SolitaireGui(this);
-        //calls on SolitaireGui class
-        hand = makeHand();
-        //makes the pile of free cards
-        deal();    
-        //calls on method deal
-        moves = 0; //declares the initial # of moves
+        this.game = game;   //creates an instance of game that is this game
+        frame = new JFrame("Solitaire");    //the name of the application at the top
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);   //allows the application to be closed
+        frame.getContentPane().add(this);   //adds the game to the window
+
+        this.setPreferredSize(new Dimension(930, 620)); //the size of the window is 930*620
+        this.addMouseListener(this);    //adds a mouse listener
+
+        frame.pack();   //makes the elements fit inside the window size
+        frame.setVisible(true);     //allows the window to be visible
     }
 
-    
-    public Stack<Card> makeHand()
+    public void paint(Graphics g)
     {
-        ArrayList<Card> deck = new ArrayList<Card>();
-        //initializes a list to be filled with cards
-        for(int k = 1; k <= 4; k++){
-            for(int n = 1; n <= 13; n++){
-                String suit = "";   //suit initialized as empty string
-                if(k == 1){
-                    suit = "d"; //diamond suit
-                }
-                if(k == 2){
-                    suit = "s"; //spade suit
-                }
-                if(k == 3){
-                    suit = "c"; //club suit
-                }
-                if(k == 4){
-                    suit = "h"; //heart suit
-                }
-                Card temp = new Card(n, suit);
-                //creates a card with certain specifications into deck
-                deck.add(temp); //adds cards to deck
-            }
-        }
-        Stack<Card> hand = new Stack<Card>();
-        //creates a stack of the cards to be in the hand pile
-        while(deck.size() != 0)
+        g.setColor(new Color(81, 2, 39));
+        g.fillRect(cardwide+(space), 0, getWidth()-2*(space+cardwide), getHeight());
+        g.setColor(new Color(209,184,191));
+        g.fillRect(0, 0, cardwide+(space), getHeight());
+        g.fillRect(cardwide+(space)+getWidth()-2*(space+cardwide), 0, cardwide+(space), getHeight());
+        //hand
+        drawCard(g, game.getHand(), space/2 , space);
+
+        //talon
+        drawCard(g, game.getTalon(), space/2, space+(cardhigh + 2 * space));
+        if (selectedRow == 0 && selectedCol == 1)
+            drawBorder(g, space/2, space+(cardhigh + 2 * space));
+
+        //foundation
+        for (int k = 0; k < 4; k++)
+            drawCard(g, game.getFoundation(k), getWidth()-(space/2)-cardwide,space+(cardhigh + 2 * space)*k);
+
+        //tableau
+        for (int n = 0; n < 7; n++)
         {
-            if(deck.size() == 1){ 
-                hand.push(deck.remove(0));
-                //puts the last card in the hand
-            }
-            else
+            Stack<Card> pile = game.getTableau(n);
+            int offset = 0;
+            for (int j = 0; j < pile.size(); j++)
             {
-                int rand = (int)(Math.random()*deck.size());
-                //generates a random integer between 0 and 52
-                hand.push(deck.remove(rand));
-                //puts the card with the randomly generated index into hand
-            }
-        }
-        return hand;    //returns the randomized hand
-    }
+                drawCard(g, pile.get(j),space+(cardwide+space)*(n+1), space + offset);
+                if (selectedRow == 1 && selectedCol == n && j == pile.size() - 1)
+                    drawBorder(g, space+(cardwide+space)*(n+1), space + offset);
 
-    public void deal()
-    {
-        for(int k = 0; k < tableau.length; k++)
-        {
-            int count = 0;  //count initialized at 0
-            tableau[k] = new Stack<Card>();     //tableau at index k is new stack of cards for 7 piles
-            while(count < k + 1)
-            {
-                Card temp = hand.pop();     //removes a card from the hand pile and returns it to temp
-                tableau[k].push(temp);
-                //adds card temp to tableau
-                count++;
-                //increments count
-            }
-            tableau[k].peek().turnFaceUp();
-            //looks at last card in tableau at index k and turns up
-        }
-    }
-
-    public Card getFoundation(int k){
-        if(foundation[k].isEmpty()){
-            return null;        //if foundation empty then null is returned
-        }
-        return foundation[k].peek();        //looks at the top card of foundation if not empty  
-    }
-
-    public Stack<Card> getTableau(int k)
-    {
-        return tableau[k];      //gets the stack tableau at the index k
-    }
-
-    public Card getTalon(){
-        if(talon.size() == 0)
-        {
-            return null;        //if talon is empty then null returned
-        }
-        return talon.peek();        //looks at the last card in the talon
-    }
-
-    public Card getHand(){
-        if(hand.size() == 0){
-            return null;        //if hand is empty then null is returned
-        }
-        return hand.peek();     //gets the last card in the hand
-    }
-
-    public void giveCard()      //from the new card pile
-    {
-        for(int k = 0; k < 3; k++){
-            if(!hand.isEmpty())
-            {
-                Card temp = hand.pop();     //removes a card from the hand pile and returns it to temp
-                talon.push(temp);
-                temp.turnFaceUp();      
+                if (pile.get(j).isFaceUp())
+                    offset += up_offset;
+                else
+                    offset += down_offset;
             }
         }
     }
 
-    public void resetHand()
+    private void drawBorder(Graphics g, int x, int y)
     {
-        while(!talon.isEmpty())         //while there are still cards in talon
+        g.setColor(Color.GRAY);
+        g.drawRect(x, y, cardwide, cardhigh);
+        g.drawRect(x + 1, y + 1, cardwide - 2, cardhigh - 2);
+        g.drawRect(x + 2, y + 2, cardwide - 4, cardhigh - 4);
+    }
+
+    private void drawCard(Graphics g, Card card, int x, int y)
+    {
+        if (card == null)
         {
-            Card temp = talon.pop();    //removes a card from the talon pile and returns it to temp
-            temp.turnFaceDown();        //turn top card face dowm
-            hand.push(temp);            
+            g.setColor(Color.BLACK);
+            g.drawRect(x, y, cardwide, cardhigh);
         }
-    }
-
-    public void handPressed(){
-        System.out.println("You pressed the hand pile");    
-        gui.unselect();
-        if(!gui.isTalonSelected()&&!gui.isTableauSelected()) 
+        else
         {
-            if(hand.isEmpty())      //if user went through all the cards
-                resetHand();        //reset new card pile (in the same order as before)
-            else 
-                giveCard();         //if there are cards left, give top card
+            String fileName = card.getFileName();
+            if (!new File(fileName).exists())
+                throw new IllegalArgumentException("bad file name:  " + fileName);
+            Image image = new ImageIcon(fileName).getImage();
+            g.drawImage(image, x, y, cardwide, cardhigh, null);
         }
     }
 
-    public void talonPressed(){
-        System.out.print("You pressed the talon pile");
-        if(!talon.isEmpty())                //if there are more cards
+    public void mouseExited(MouseEvent e)
+    {
+    }
+
+    public void mouseEntered(MouseEvent e)
+    {
+    }
+
+    public void mouseReleased(MouseEvent e)
+    {
+    }
+
+    public void mousePressed(MouseEvent e)
+    {
+    }
+
+    public void mouseClicked(MouseEvent e)
+    {
+        //none selected previously
+        double xPos = e.getX();
+        double yPos = e.getY();
+        int col = 0;
+        int row = 0;
+        //finds the column for tableau
+        if((xPos>=130)&&(xPos<=200))
+            col = 0;
+        if((xPos>=230)&&(xPos<=300))
+            col = 1;
+        if((xPos>=330)&&(xPos<=400))
+            col = 2;
+        if((xPos>=430)&&(xPos<=500))
+            col = 3;
+        if((xPos>=530)&&(xPos<=600))
+            col = 4;
+        if((xPos>=630)&&(xPos<=700))
+            col = 5;
+        if((xPos>=730)&&(xPos<=800))
+            col = 6;
+        //find the row for foundation
+        if((yPos>=30)&&(yPos<=125))
+            row = 0;
+        if((yPos>=185)&&(yPos<=280))
+            row = 1;
+        if((yPos>=340)&&(yPos<=435))
+            row = 2;
+        if((yPos>=495)&&(yPos<=590))
+            row = 3;
+        if ((xPos>=15)&&(xPos<=85)&&(yPos>=30)&&(yPos<=125))
         {
-            if(!gui.isTalonSelected())      //if it is unselected, select the card
-                gui.selectTalon();
-            else
-                gui.unselect();             //if already selected, unselect
+            game.handPressed();
         }
-    }
-
-    public void foundationPressed(int k){
-        System.out.println("foundation #" + k + "pressed");
-        if(gui.isTalonSelected())
+        else if ((xPos>=15)&&(xPos<=85)&&(yPos<=250)&&(yPos>=155))
         {
-            if(canAddToFoundation(talon.peek(), k))     //checks to see if card can be added to foundation (far right w/aces)
-            {
-                Card temp = talon.pop();
-                foundation[k].push(temp);               //add the new card to the foundation
-                gui.unselect();                         //unselect the card
-            }
+            game.talonPressed();
         }
-        if(gui.isTableauSelected())                     //if user wants card to be added to tableau
+        else if ((xPos>=845)&&(xPos<=915))
         {
-            Stack<Card> selectedTableau = tableau[gui.selectedTableau()];       
-            if(canAddToFoundation(selectedTableau.peek(), k))       //checks to see if card can be added to foundation
-            {
-                Card temp = selectedTableau.pop();       //removes a card from the selected tableau and returns it to temp
-                foundation[k].push(temp);
-                if(!selectedTableau.isEmpty())
-                { 
-                    selectedTableau.peek().turnFaceUp();
-                }
-                gui.unselect();
-            }
+            game.foundationPressed(row);
         }
-    }
-
-    public void tableauPressed(int k){
-        System.out.println("tableau#" + k + " pressed");
-        if(gui.isTalonSelected()){
-            Card temp = talon.peek();
-            if(canAddToTableau(temp, k)){
-                tableau[k].push(talon.pop());
-                tableau[k].peek().turnFaceUp();
-            }
-            gui.unselect();
-            gui.selectTableau(k);
-        }
-        else if(gui.isTableauSelected()){
-            int lastTableau = gui.selectedTableau();
-            if(k != lastTableau)
-            {
-                Stack<Card> temp = removeFaceUpCards(lastTableau);
-                if(canAddToTableau(temp.peek(), k))
-                {
-                    addToTableau(temp,k);
-                    if(!tableau[lastTableau].isEmpty()){
-                        tableau[lastTableau].peek().turnFaceUp();
-
-                    }
-                    gui.unselect();
-                }
-                else{
-                    addToTableau(temp, lastTableau);
-                    gui.unselect();
-                    gui.selectTableau(k);
-                }
-            }
-            else{
-                gui.unselect();
-            }
-        }
-        else{
-            gui.selectTableau(k);
-            tableau[k].peek().turnFaceUp();
-        }
-    }
-
-    private boolean canAddToTableau(Card c, int k)
-    {
-        Stack<Card> pile = tableau[k];
-        if(pile.isEmpty())
-            return(c.getNumber() == 13);
-        Card top = pile.peek();
-        if(!top.isFaceUp())
-            return false;
-        return (c.isBlack() != top.isBlack())&&
-        (c.getNumber() == top.getNumber()-1);
-    }
-
-    private Stack<Card> removeFaceUpCards(int k){
-        Stack<Card> card = new Stack<Card>();
-        while(!tableau[k].isEmpty() && tableau[k].peek().isFaceUp())
+        else if ((xPos>=130)&&(xPos<=800))
         {
-            card.push(tableau[k].pop());
+            game.tableauPressed(col);
         }
-        return card;
+        repaint();
     }
 
-    private void addToTableau(Stack<Card> c, int k)
+    public void unselect()
     {
-        while (!c.isEmpty())
-        {
-            tableau[k].push(c.pop());
-        }
+        selectedRow = -1;
+        selectedCol = -1;
     }
 
-    private boolean canAddToFoundation(Card c, int k)
+    public boolean isTalonSelected()
     {
-        if (foundation[k].isEmpty()) 
-            return (c.getNumber() == 1);
-        Card temp = foundation[k].peek();
-        return (temp.getNumber() + 1 == c.getNumber())
-        && (temp.getSuit().equals(c.getSuit()));
+        return selectedRow == 0 && selectedCol == 1;
     }
 
-    /**checks if user has made a valid move*/
-    public boolean canMove()
+    public void selectTalon()
     {
-        return true;
+        selectedRow = 0;
+        selectedCol = 1;
     }
 
-    /**moves cards from on pile to another*/
-    public void move()
+    public boolean isTableauSelected()
     {
+        return selectedRow == 1;
     }
 
-    /**controls how the deck moves*/
-    public void moveDeck()
+    public int selectedTableau()
     {
+        if (selectedRow == 1)
+            return selectedCol;
+        else
+            return -1;
     }
 
-    /**Check if the user has won*/
-    public boolean hasWon()
+    public void selectTableau(int index)
     {
-        return true;
+        selectedRow = 1;
+        selectedCol = index;
     }
 }
