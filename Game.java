@@ -55,7 +55,6 @@ public class Game
         moves = 0; //declares the initial # of moves
     }
 
-    
     public Stack<Card> makeHand()
     {
         ArrayList<Card> deck = new ArrayList<Card>();
@@ -147,14 +146,14 @@ public class Game
 
     public void giveCard()      //from the new card pile
     {
-        for(int k = 0; k < 3; k++){
-            if(!hand.isEmpty())
-            {
-                Card temp = hand.pop();     //removes a card from the hand pile and returns it to temp
-                talon.push(temp);   //places temp card in talon
-                temp.turnFaceUp();      //turns the temp card up
-            }
+
+        if(!hand.isEmpty())
+        {
+            Card temp = hand.pop();     //removes a card from the hand pile and returns it to temp
+            talon.push(temp);   //places temp card in talon
+            temp.turnFaceUp();      //turns the temp card up
         }
+
     }
 
     public void resetHand()
