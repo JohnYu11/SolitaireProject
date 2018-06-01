@@ -321,25 +321,22 @@ public class Game
         //returns that only higher card of same suit can be placed
     }
 
-    /**checks if user has made a valid move*/
-    public boolean canMove()
-    {
-        return true;
-    }
-
-    /**moves cards from on pile to another*/
-    public void move()
-    {
-    }
-
-    /**controls how the deck moves*/
-    public void moveDeck()
-    {
-    }
-
     /**Check if the user has won*/
     public boolean hasWon()
     {
-        return true;
+        boolean won = false;    //won intialized
+        for(int k = 0; k < foundation.length; k++){
+            Card temp = foundation[k].peek();   //looks at last card
+            if(temp.getNumber() == 13)
+            {
+                won = true;     //won is true
+            }    
+            else
+            {
+                won = false;    //won is false
+                break;      //breaks out of loop
+            }
+        }
+        return won; //returns won
     }
 }
