@@ -151,8 +151,8 @@ public class Game
             if(!hand.isEmpty())
             {
                 Card temp = hand.pop();     //removes a card from the hand pile and returns it to temp
-                talon.push(temp);
-                temp.turnFaceUp();      
+                talon.push(temp);   //places temp card in talon
+                temp.turnFaceUp();      //turns the temp card up
             }
         }
     }
@@ -163,13 +163,13 @@ public class Game
         {
             Card temp = talon.pop();    //removes a card from the talon pile and returns it to temp
             temp.turnFaceDown();        //turn top card face dowm
-            hand.push(temp);            
+            hand.push(temp);        //places temp card in hand     
         }
     }
 
     public void handPressed(){
         System.out.println("You pressed the hand pile");    
-        gui.unselect();
+        gui.unselect(); //deselects pile
         if(!gui.isTalonSelected()&&!gui.isTableauSelected()) 
         {
             if(hand.isEmpty())      //if user went through all the cards
@@ -206,94 +206,120 @@ public class Game
             Stack<Card> selectedTableau = tableau[gui.selectedTableau()];       
             if(canAddToFoundation(selectedTableau.peek(), k))       //checks to see if card can be added to foundation
             {
-                Card temp = selectedTableau.pop();       //removes a card from the selected tableau and returns it to temp
-                foundation[k].push(temp);
+                Card temp = selectedTableau.pop();       
+                //removes a card from the selected tableau and returns it to temp
+                foundation[k].push(temp);   
+                //pushes a card from foundation to temp
                 if(!selectedTableau.isEmpty())
                 { 
                     selectedTableau.peek().turnFaceUp();
+                    //looks at the last card in tableau pile and turns it up
                 }
-                gui.unselect();
+                gui.unselect(); //deselects tableau
             }
         }
     }
 
     public void tableauPressed(int k){
         System.out.println("tableau#" + k + " pressed");
+        //prints out the # of tableau pressed 
         if(gui.isTalonSelected()){
             Card temp = talon.peek();
+            //temp is last card in talon
             if(canAddToTableau(temp, k)){
                 tableau[k].push(talon.pop());
+                //pushes card removed from talon to tableau
                 tableau[k].peek().turnFaceUp();
+                //looks at last card in tableau and turns it up
             }
-            gui.unselect();
-            gui.selectTableau(k);
+            gui.unselect(); //deselects the tableau
+            gui.selectTableau(k);   //selects the tableau
         }
         else if(gui.isTableauSelected()){
             int lastTableau = gui.selectedTableau();
+            //lastTableau is selected tableau
             if(k != lastTableau)
             {
                 Stack<Card> temp = removeFaceUpCards(lastTableau);
+                //temp stack is cards removed from lastTableau
                 if(canAddToTableau(temp.peek(), k))
                 {
                     addToTableau(temp,k);
+                    //adds temp cards to tableau 
                     if(!tableau[lastTableau].isEmpty()){
                         tableau[lastTableau].peek().turnFaceUp();
-
+                        //looks at card in tableau if not empty and turns up
                     }
-                    gui.unselect();
+                    gui.unselect(); //deselects the pile
                 }
                 else{
-                    addToTableau(temp, lastTableau);
-                    gui.unselect();
-                    gui.selectTableau(k);
+                    addToTableau(temp, lastTableau);    //adds cards to tableau
+                    gui.unselect();     //deselects pile
+                    gui.selectTableau(k);   //selects the tableau again
                 }
             }
             else{
-                gui.unselect();
+                gui.unselect(); //deselects the pile
             }
         }
         else{
-            gui.selectTableau(k);
-            tableau[k].peek().turnFaceUp();
+            gui.selectTableau(k);       //selects the tableau
+            tableau[k].peek().turnFaceUp(); //looks at last card and turns up
         }
     }
 
     private boolean canAddToTableau(Card c, int k)
     {
-        Stack<Card> pile = tableau[k];
+        Stack<Card> pile = tableau[k];      
+        //makes a stack made of card at index in tableau
         if(pile.isEmpty())
-            return(c.getNumber() == 13);
-        Card top = pile.peek();
+        {
+            return(c.getNumber() == 13);    
+            //if pile empty then only king card can be placed there
+        }
+        Card top = pile.peek(); //looks at top card in pile
         if(!top.isFaceUp())
-            return false;
+        {
+            return false; 
+            //if top card isn't face up then returns that it isn't face up
+        }
         return (c.isBlack() != top.isBlack())&&
         (c.getNumber() == top.getNumber()-1);
+        //returns that only card of other color and lower rank can be placed
     }
 
     private Stack<Card> removeFaceUpCards(int k){
         Stack<Card> card = new Stack<Card>();
+        //creates a new stack
         while(!tableau[k].isEmpty() && tableau[k].peek().isFaceUp())
         {
             card.push(tableau[k].pop());
+            //removes card from tableau and puts it in card stack
         }
-        return card;
+        return card;    //returns stack of card
     }
 
     private void addToTableau(Stack<Card> c, int k)
     {
         while (!c.isEmpty())
         {
-            tableau[k].push(c.pop());
+            tableau[k].push(c.pop());   
+            //removes card from stack and puts it in tableau
         }
     }
 
     private boolean canAddToFoundation(Card c, int k)
     {
         if (foundation[k].isEmpty()) 
+        {
             return (c.getNumber() == 1);
+            //returns that only ace can be placed in foundation if empty
+        }
         Card temp = foundation[k].peek();
+        //looks at top card in foundation
         return (temp.getNumber() + 1 == c.getNumber())
         && (temp.getSuit().equals(c.getSuit()));
+        //returns that only higher card of same suit can be placed
     }
 
     /**checks if user has made a valid move*/
