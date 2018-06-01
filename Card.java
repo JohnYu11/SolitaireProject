@@ -17,8 +17,9 @@ public class Card
 
     public Card(int number, String suit)
     {
-        myNumber = number; //set variables to instance of card
-        mySuit = suit;
+        //set variables to instance of card
+        myNumber = number; 
+        mySuit = suit;  
         faceUp = false;    
     }
 
@@ -26,33 +27,33 @@ public class Card
 
     public int getNumber()
     {
-        return myNumber;
+        return myNumber;    //returns card #
     }
     
     public String getSuit(){
-        return mySuit;
+        return mySuit;  //returns card type
     }
 
     // card face methods
     public void turnFaceDown()
     {
-        faceUp = false; 
+        faceUp = false;     //turns card upside down
     }
 
     public void turnFaceUp()
     {
-        faceUp = true; 
+        faceUp = true;  //turns card right side up
     }
 
     public boolean isFaceUp()
     {
-        return faceUp;  
+        return faceUp;      //returns whether card is faceUp
     }       
 
     //if black color
     public boolean isBlack()
     {
-        return (mySuit.equals("s") || mySuit.equals("c"));      
+        return (mySuit.equals("s") || mySuit.equals("c"));      //returns whether card is black
     }    
 
     /**
@@ -63,16 +64,16 @@ public class Card
      */
     public String getFileName()
     {
-        if (!faceUp)
+        if (!faceUp)    //
         {
-            return "backcard.gif"; //using escape sequence, not double slash
+            return "CardImages/backcard.gif"; //using escape sequence, not double slash
         }
-        if (myNumber == 10) return "t" + mySuit + ".gif";
-        if (myNumber == 11) return "j" + mySuit + ".gif";
-        if (myNumber == 12) return "q" + mySuit + ".gif";
-        if (myNumber == 13) return "k" + mySuit + ".gif";
-        if (myNumber == 1) return "a" + mySuit + ".gif";
-        return myNumber + mySuit + ".gif";
+        if (myNumber == 10) return "CardImages/t" + mySuit + ".gif";
+        if (myNumber == 11) return "CardImages/j" + mySuit + ".gif";
+        if (myNumber == 12) return "CardImages/q" + mySuit + ".gif";
+        if (myNumber == 13) return "CardImages/k" + mySuit + ".gif";
+        if (myNumber == 1) return "CardImages/a" + mySuit + ".gif";
+        return "CardImages/"+ myNumber + mySuit + ".gif";
     }    
 
 }
