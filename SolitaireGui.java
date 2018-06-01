@@ -46,45 +46,57 @@ public class SolitaireGui extends JComponent implements MouseListener
     public void paint(Graphics g)
     {
         g.setColor(new Color(81, 2, 39));
+        //sets color to purpleish color
         g.fillRect(cardwide+(space), 0, getWidth()-2*(space+cardwide), getHeight());
+        //fills middle area of screen with that color
         g.setColor(new Color(209,184,191));
+        //sets color to lighter shade of pink
         g.fillRect(0, 0, cardwide+(space), getHeight());
+        //fills the side areas with new color
         g.fillRect(cardwide+(space)+getWidth()-2*(space+cardwide), 0, cardwide+(space), getHeight());
-        //hand
+        //fills side areas with new color
+        
+        //draws hand pile
         drawCard(g, game.getHand(), space/2 , space);
 
-        //talon
+        //draws talon pile
         drawCard(g, game.getTalon(), space/2, space+(cardhigh + 2 * space));
         if (selectedRow == 0 && selectedCol == 1)
             drawBorder(g, space/2, space+(cardhigh + 2 * space));
 
-        //foundation
+        //draws foundation piles
         for (int k = 0; k < 4; k++)
             drawCard(g, game.getFoundation(k), getWidth()-(space/2)-cardwide,space+(cardhigh + 2 * space)*k);
 
-        //tableau
+        //draws tableau piles
         for (int n = 0; n < 7; n++)
         {
             Stack<Card> pile = game.getTableau(n);
+            //creates stack of tableau pile
             int offset = 0;
+            //the distance between cards
             for (int j = 0; j < pile.size(); j++)
             {
                 drawCard(g, pile.get(j),space+(cardwide+space)*(n+1), space + offset);
                 if (selectedRow == 1 && selectedCol == n && j == pile.size() - 1)
                     drawBorder(g, space+(cardwide+space)*(n+1), space + offset);
-
+                //if pile selected then a border is drawn around it
                 if (pile.get(j).isFaceUp())
                     offset += up_offset;
+                    //increments offset
                 else
                     offset += down_offset;
+                    //increments offset
             }
         }
     }
 
     private void drawBorder(Graphics g, int x, int y)
     {
-        g.setColor(Color.GRAY);
-        g.drawRect(x, y, cardwide, cardhigh);
+        g.setColor(Color.GRAY);     //sets color of border to gray
+        
+        //fills rectangle around card
+        g.drawRect(x, y, cardwide, cardhigh);   
         g.drawRect(x + 1, y + 1, cardwide - 2, cardhigh - 2);
         g.drawRect(x + 2, y + 2, cardwide - 4, cardhigh - 4);
     }
@@ -93,16 +105,19 @@ public class SolitaireGui extends JComponent implements MouseListener
     {
         if (card == null)
         {
-            g.setColor(Color.BLACK);
-            g.drawRect(x, y, cardwide, cardhigh);
+            g.setColor(Color.BLACK);    //sets color as black
+            g.drawRect(x, y, cardwide, cardhigh);   //fills rectangle of card size
         }
         else
         {
-            String fileName = card.getFileName();
+            String fileName = card.getFileName();   //gets file name
             if (!new File(fileName).exists())
                 throw new IllegalArgumentException("bad file name:  " + fileName);
+            //throws an exception file inaccessible
             Image image = new ImageIcon(fileName).getImage();
+            //gets the image
             g.drawImage(image, x, y, cardwide, cardhigh, null);
+            //draws the image
         }
     }
 
@@ -169,22 +184,25 @@ public class SolitaireGui extends JComponent implements MouseListener
         {
             game.tableauPressed(col);
         }
-        repaint();
+        repaint();  //updates what is seen
     }
 
     public void unselect()
     {
-        selectedRow = -1;
+        //deselects the pile selected by making selected pile null
+        selectedRow = -1;      
         selectedCol = -1;
     }
 
     public boolean isTalonSelected()
     {
         return selectedRow == 0 && selectedCol == 1;
+        //returns whether talon is selected
     }
 
     public void selectTalon()
     {
+        //selects the talon
         selectedRow = 0;
         selectedCol = 1;
     }
@@ -192,19 +210,20 @@ public class SolitaireGui extends JComponent implements MouseListener
     public boolean isTableauSelected()
     {
         return selectedRow == 1;
+        //returns whether the tableau has been selected
     }
 
     public int selectedTableau()
     {
         if (selectedRow == 1)
-            return selectedCol;
+            return selectedCol; //returns which tableau is selected
         else
-            return -1;
+            return -1;  //null pile selected otherwise
     }
 
     public void selectTableau(int index)
     {
-        selectedRow = 1;
-        selectedCol = index;
+        selectedRow = 1;    //returns the row selected
+        selectedCol = index;    //returns the col selected
     }
 }
