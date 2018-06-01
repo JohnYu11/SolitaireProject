@@ -23,7 +23,7 @@ public class Card
         faceUp = false;    
     }
 
-    /**GET VARIABLES**/
+ //get methods
 
     public int getNumber()
     {
@@ -57,14 +57,10 @@ public class Card
     }    
 
     /**
-     *Finds appropriate file name for gif corresponding to card based
-     * on suit and myNumber
      *
-     * @return name of the file for the appropriate Card
-     */
     public String getFileName()
     {
-        if (!faceUp)    //
+        if (!faceUp)    //if card isn't face up then gets back image
         {
             return "CardImages/backcard.gif"; //using escape sequence, not double slash
         }
@@ -74,6 +70,7 @@ public class Card
         if (myNumber == 13) return "CardImages/k" + mySuit + ".gif";
         if (myNumber == 1) return "CardImages/a" + mySuit + ".gif";
         return "CardImages/"+ myNumber + mySuit + ".gif";
+        //returns the file name in the folder for card
     }    
 
 }
