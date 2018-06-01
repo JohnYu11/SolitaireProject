@@ -56,8 +56,7 @@ public class Card
         return (mySuit.equals("s") || mySuit.equals("c"));      //returns whether card is black
     }    
 
-    /**
-     *
+   
     public String getFileName()
     {
         if (!faceUp)    //if card isn't face up then gets back image
