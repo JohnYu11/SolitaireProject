@@ -18,7 +18,7 @@ public class Card
     public Card(int number, String suit)
     {
         //set variables to instance of card
-        myNumber = number; 
+        myNumber = number;      //set each of the instance variables to whatever is in the parameter
         mySuit = suit;  
         faceUp = false;    
     }
@@ -63,7 +63,7 @@ public class Card
         {
             return "CardImages/backcard.gif"; //using escape sequence, not double slash
         }
-        if (myNumber == 10) return "CardImages/t" + mySuit + ".gif";
+        if (myNumber == 10) return "CardImages/t" + mySuit + ".gif";    //get each card image
         if (myNumber == 11) return "CardImages/j" + mySuit + ".gif";
         if (myNumber == 12) return "CardImages/q" + mySuit + ".gif";
         if (myNumber == 13) return "CardImages/k" + mySuit + ".gif";
