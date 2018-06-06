@@ -50,8 +50,7 @@ public class Game
         gui = new GuiMethods(this);
         //calls on GuiMethods class
         hand = makeHand();
-        deal();    
-        //calls on method deal
+        deal(); //calls on method deal   
         moves = 0; //declares the initial # of moves
     }
 
@@ -99,6 +98,7 @@ public class Game
         return hand;    //returns the randomized hand
     }
 
+    /** puts the cards into the 7 tableaus **/
     public void deal()
     {
         for(int k = 0; k < tableau.length; k++)
@@ -118,18 +118,22 @@ public class Game
         }
     }
 
-    public Card getFoundation(int k){
+    /** returns whether or not the foundation has a card **/
+    public Card getFoundation(int k)
+    {
         if(foundation[k].isEmpty()){
             return null;
         }
         return foundation[k].peek();
     }
 
+    /** returns the card on tableau based on pos k**/
     public Stack<Card> getTableau(int k)
     {
         return tableau[k];
     }
 
+    /**returns card in talon **/
     public Card getTalon(){
         if(talon.size() == 0)
         {
@@ -138,6 +142,7 @@ public class Game
         return talon.peek();
     }
 
+    /** returns the next card in the pile **/
     public Card getHand(){
         if(hand.size() == 0){
             return null;
@@ -145,6 +150,7 @@ public class Game
         return hand.peek();
     }
 
+    /** puts card from the hand into the foundation **/
     public void giveCard()
     {
         for(int k = 0; k < 3; k++){
@@ -157,6 +163,7 @@ public class Game
         }
     }
 
+    /** **/
     public void resetHand()
     {
         while(!talon.isEmpty())
@@ -167,6 +174,7 @@ public class Game
         }
     }
 
+    /**gives card if hand is pressed and there are cards left **/
     public void handPressed(){
         System.out.println("You pressed the hand pile");
         gui.unselect();
@@ -179,6 +187,7 @@ public class Game
         }
     }
 
+    /** **/
     public void talonPressed(){
         System.out.print("You pressed the talon pile");
         if(!talon.isEmpty())
