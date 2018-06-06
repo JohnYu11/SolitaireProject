@@ -55,6 +55,7 @@ frame.setVisible(true);     //allows the window to be visible
 
 public void actionPerformed(ActionEvent e)
 {
+    frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
     MenuFrame m = new MenuFrame();
 }
 
