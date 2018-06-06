@@ -40,6 +40,7 @@ public class MenuFrame extends JComponent implements MouseListener
 
     public void mouseClicked(MouseEvent e)
     {
+        frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
         Game g = new Game();
     }
 
