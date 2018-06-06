@@ -205,7 +205,8 @@ selectedRow = 0;
 selectedCol = 1;
 }
 
-public boolean isTableauSelected()
+/** if user clicked on tableau**/
+public boolean isTableauSelected()  
 {
 return selectedRow == 1;
 }
