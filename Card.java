@@ -22,29 +22,34 @@ public class Card
         faceUp = false;    
     }
 
-    /**GET VARIABLES**/
+    /**Get Methods**/
 
-    public int getNumber()
+    /** get whatever number is on the card **/ 
+    public int getNumber()      
     {
         return myNumber;
     }
     
-    public String getSuit(){
+     /**  get whatever suit is on the card **/ 
+    public String getSuit()    
+    {
         return mySuit;
     }
 
     // card face methods
-    public void turnFaceDown()
+    public void turnFaceDown()  //all the cards are facedown initially
     {
         faceUp = false; 
     }
-
-    public void turnFaceUp()
+    
+    /** use to turn the top card face up **/ 
+    public void turnFaceUp()    
     {
         faceUp = true; 
     }
-
-    public boolean isFaceUp()
+    
+    /** check if faceUp **/ 
+    public boolean isFaceUp()   
     {
         return faceUp;  
     }       
@@ -67,7 +72,7 @@ public class Card
         {
             return "backcard.gif"; //using escape sequence, not double slash
         }
-        if (myNumber == 10) return "t" + mySuit + ".gif";
+        if (myNumber == 10) return "t" + mySuit + ".gif";   
         if (myNumber == 11) return "j" + mySuit + ".gif";
         if (myNumber == 12) return "q" + mySuit + ".gif";
         if (myNumber == 13) return "k" + mySuit + ".gif";
