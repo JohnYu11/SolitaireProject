@@ -8,8 +8,6 @@
  * Purpose: Makes it possible for the player to play the game.
  */
 import java.awt.*; // access to Container
-import java.awt.event.*; // access to WindowAdapter, WindowEvent
-import java.io.*; //access to input/output
 import javax.swing.*; // access to JFrame and Jcomponents
 
 public class WonMenu extends JComponent{
