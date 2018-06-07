@@ -2,63 +2,59 @@
  * FINAL PROJECT
  * John Yu, Varshini Sathish
  * 4/26/2018
- * 
+ *
  * Description: This class represents the attributes 
  * of a card with a given number and suit.
- * 
+ *
  * Purpose: These cards are used to fill arrays and
  * can be used to compare to other cards.
  */
 public class Card
-{      
+{
     private int myNumber; //initialize the attributes of a card
     private String mySuit;  //either d,c,s, or h
     private boolean faceUp; //true if faceUp, false otherwise   
 
     public Card(int number, String suit)
     {
-        myNumber = number; //set variables to instance of card
+        //set variables to instance of card
+        myNumber = number;
         mySuit = suit;
-        faceUp = false;    
+        faceUp = false;
     }
 
-    /**Get Methods**/
+    /**GET VARIABLES**/
 
-    /** get whatever number is on the card **/ 
-    public int getNumber()      
+    public int getNumber()
     {
-        return myNumber;
+        return myNumber;    //returns card #
     }
-    
-     /**  get whatever suit is on the card **/ 
-    public String getSuit()    
-    {
-        return mySuit;
+
+    public String getSuit(){
+        return mySuit;  //returns card type
     }
 
     // card face methods
-    public void turnFaceDown()  //all the cards are facedown initially
+    public void turnFaceDown()
     {
-        faceUp = false; 
+        faceUp = false;     //turns card upside down
     }
-    
-    /** use to turn the top card face up **/ 
-    public void turnFaceUp()    
+
+    public void turnFaceUp()
     {
-        faceUp = true; 
+        faceUp = true;  //turns card right side up
     }
-    
-    /** check if faceUp **/ 
-    public boolean isFaceUp()   
+
+    public boolean isFaceUp()
     {
-        return faceUp;  
-    }       
+        return faceUp;      //returns whether card is faceUp
+    }
 
     //if black color
     public boolean isBlack()
     {
-        return (mySuit.equals("s") || mySuit.equals("c"));      
-    }    
+        return (mySuit.equals("s") || mySuit.equals("c"));      //returns whether card is black
+    }
 
     /**
      *Finds appropriate file name for gif corresponding to card based
@@ -68,16 +64,16 @@ public class Card
      */
     public String getFileName()
     {
-        if (!faceUp)
+        if (!faceUp)    //
         {
-            return "backcard.gif"; //using escape sequence, not double slash
+            return "src/CardImages/backcard.gif"; //using escape sequence, not double slash
         }
-        if (myNumber == 10) return "t" + mySuit + ".gif";   
-        if (myNumber == 11) return "j" + mySuit + ".gif";
-        if (myNumber == 12) return "q" + mySuit + ".gif";
-        if (myNumber == 13) return "k" + mySuit + ".gif";
-        if (myNumber == 1) return "a" + mySuit + ".gif";
-        return myNumber + mySuit + ".gif";
-    }    
+        if (myNumber == 10) return "src/CardImages/t" + mySuit + ".gif";
+        if (myNumber == 11) return "src/CardImages/j" + mySuit + ".gif";
+        if (myNumber == 12) return "src/CardImages/q" + mySuit + ".gif";
+        if (myNumber == 13) return "src/CardImages/k" + mySuit + ".gif";
+        if (myNumber == 1) return "src/CardImages/a" + mySuit + ".gif";
+        return "src/CardImages/"+ myNumber + mySuit + ".gif";
+    }
 
 }
