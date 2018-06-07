@@ -36,13 +36,29 @@ public class JarPictLoader {
 		
 		
 
-		public ImageIcon getFishy1() {
+		public ImageIcon getAs() {
 			// have a 'get' method for each image
-			return fishy1;
+			return as;
 		}
 
-		public ImageIcon getFishy2() {
+		public ImageIcon getAd() {
 			// have a 'get' method for each image
-			return fishy2;
+			return ad;
+		}
+		public ImageIcon getAc() {
+			// have a 'get' method for each image
+			return ac;
+		}
+		public ImageIcon getAh() {
+			// have a 'get' method for each image
+			return ah;
+		}
+		public ImageIcon get2s() {
+			// have a 'get' method for each image
+			return 2s;
+		}
+		public ImageIcon get2d() {
+			// have a 'get' method for each image
+			return 2d;
 		}
 	}
