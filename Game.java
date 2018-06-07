@@ -11,7 +11,7 @@ public class Game
 {
     public static void main(String[]args){
         MenuFrame menuF = new MenuFrame();
-        
+
     }
     private Stack<Card>[]foundation;
     //the array for the stacks for the 4 suit piles
@@ -50,11 +50,12 @@ public class Game
         gui = new GuiMethods(this);
         //calls on GuiMethods class
         hand = makeHand();
-        deal(); //calls on method deal   
+        deal();
+        //calls on method deal
         moves = 0; //declares the initial # of moves
     }
 
-    
+
     public Stack<Card> makeHand()
     {
         ArrayList<Card> deck = new ArrayList<Card>();
@@ -83,7 +84,7 @@ public class Game
         //creates a stack of the cards to be in the hand pile
         while(deck.size() != 0)
         {
-            if(deck.size() == 1){ 
+            if(deck.size() == 1){
                 hand.push(deck.remove(0));
                 //puts the last card in the hand
             }
@@ -98,7 +99,6 @@ public class Game
         return hand;    //returns the randomized hand
     }
 
-    /** puts the cards into the 7 tableaus **/
     public void deal()
     {
         for(int k = 0; k < tableau.length; k++)
@@ -118,22 +118,18 @@ public class Game
         }
     }
 
-    /** returns whether or not the foundation has a card **/
-    public Card getFoundation(int k)
-    {
+    public Card getFoundation(int k){
         if(foundation[k].isEmpty()){
             return null;
         }
         return foundation[k].peek();
     }
 
-    /** returns the card on tableau based on pos k**/
     public Stack<Card> getTableau(int k)
     {
         return tableau[k];
     }
 
-    /**returns card in talon **/
     public Card getTalon(){
         if(talon.size() == 0)
         {
@@ -142,7 +138,6 @@ public class Game
         return talon.peek();
     }
 
-    /** returns the next card in the pile **/
     public Card getHand(){
         if(hand.size() == 0){
             return null;
@@ -150,20 +145,16 @@ public class Game
         return hand.peek();
     }
 
-    /** puts card from the hand into the foundation **/
     public void giveCard()
     {
-        for(int k = 0; k < 3; k++){
             if(!hand.isEmpty())
             {
                 Card temp = hand.pop();
                 talon.push(temp);
                 temp.turnFaceUp();
-            }
         }
     }
 
-    /** **/
     public void resetHand()
     {
         while(!talon.isEmpty())
@@ -174,7 +165,6 @@ public class Game
         }
     }
 
-    /**gives card if hand is pressed and there are cards left **/
     public void handPressed(){
         System.out.println("You pressed the hand pile");
         gui.unselect();
@@ -182,17 +172,16 @@ public class Game
         {
             if(hand.isEmpty())
                 resetHand();
-            else 
+            else
                 giveCard();
         }
     }
 
-    /** **/
     public void talonPressed(){
         System.out.print("You pressed the talon pile");
         if(!talon.isEmpty())
         {
-            if(!gui.isTalonSelected()) 
+            if(!gui.isTalonSelected())
                 gui.selectTalon();
             else
                 gui.unselect();
@@ -218,7 +207,7 @@ public class Game
                 Card temp = selectedTableau.pop();
                 foundation[k].push(temp);
                 if(!selectedTableau.isEmpty())
-                { 
+                {
                     selectedTableau.peek().turnFaceUp();
                 }
                 gui.unselect();
@@ -276,7 +265,7 @@ public class Game
         if(!top.isFaceUp())
             return false;
         return (c.isBlack() != top.isBlack())&&
-        (c.getNumber() == top.getNumber()-1);
+                (c.getNumber() == top.getNumber()-1);
     }
 
     private Stack<Card> removeFaceUpCards(int k){
@@ -298,11 +287,11 @@ public class Game
 
     private boolean canAddToFoundation(Card c, int k)
     {
-        if (foundation[k].isEmpty()) 
+        if (foundation[k].isEmpty())
             return (c.getNumber() == 1);
         Card temp = foundation[k].peek();
         return (temp.getNumber() + 1 == c.getNumber())
-        && (temp.getSuit().equals(c.getSuit()));
+                && (temp.getSuit().equals(c.getSuit()));
     }
 
     /**checks if user has made a valid move*/
@@ -324,6 +313,20 @@ public class Game
     /**Check if the user has won*/
     public boolean hasWon()
     {
-        return true;
+        boolean won = false;    //won intialized
+        for(int k = 0; k < foundation.length; k++){
+            Card temp = foundation[k].peek();   //looks at last card
+            if(temp.getNumber() == 13)
+            {
+                won = true;     //won is true
+            }
+            else
+            {
+                won = false;    //won is false
+                break;      //breaks out of loop
+            }
+        }
+        return won;
     }
+
 }
