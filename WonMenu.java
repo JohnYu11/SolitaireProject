@@ -19,25 +19,26 @@ public class WonMenu extends JComponent{
     /**
      * Constructs a new instance of WonMenu
      */
-    public WonMenu(Game game) {
-        this.game = game; // creates an instance of game that is this game
-        frame = new JFrame("Solitaire"); // the name of the application at the top
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // allows the application to be closed
-        frame.getContentPane().add(this); // adds the game to the window
 
+    private JFrame menuFrame;
+    private JLabel start;
 
+    public WonMenu()
+    {
+        menuFrame = new JFrame("Solitaire");
+        start = new JLabel(new ImageIcon("src/CardImages/WonScreen.GIF"));
 
-        frame.setSize(930, 620);
+        menuFrame.setLayout( new FlowLayout() );
+        menuFrame.add(start);
+        menuFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        menuFrame.getContentPane().add(this);
 
-        this.setPreferredSize(new Dimension(930, 620)); // the size of the window is 930*620
+        menuFrame.setSize(930,620);
 
-        frame.pack(); // makes the elements fit inside the window size
-        frame.setVisible(true); // allows the window to be visible
-    }
+        this.setPreferredSize(new Dimension(930, 620)); //the size of the window is 930*620
 
-    public void paint(Graphics g) {
-        Image image = new ImageIcon("src/CardImages/WonScreen.gif").getImage();
-        g.drawImage(image, 0,0,930,620, null);
+        menuFrame.setVisible(true);
+
     }
 
 }
