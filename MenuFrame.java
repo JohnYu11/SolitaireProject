@@ -7,9 +7,7 @@
  */
 import java.awt.*;          // access to Container
 import java.awt.event.*;    // access to WindowAdapter, WindowEvent
-import java.io.*;           //access to input/output
 import javax.swing.*;       // access to JFrame and Jcomponents
-import java.util.*;
 
 public class MenuFrame extends JComponent implements MouseListener
 {
