@@ -1,4 +1,3 @@
-
 /**
  *  @(#)JarPictLoader.java
  *
@@ -16,7 +15,9 @@ import java.io.*;
 
 // for PrintStream to capture error info
 public class JarPictLoader {
-	private ImageIcon s,d,c,h,
+	private ImageIcon as,ad,ac,ah,2s,2d,2c,2h,3s,3d,3c,3h,4s,4d,4c,4h,
+	5s,5d,5c,5h,6s,6d,6c,6h,7s,7d,7c,7h,8s,8d,8c,8h,9s,9d,9c,9h,ts,td,tc,th,
+	js,jd,jc,jh,qs,qd,qc,qh,ks,kd,kc,kh,home,backcard,WonScreen;
 
 	// have one for each image needed
 	public JarPictLoader() 
