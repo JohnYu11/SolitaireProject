@@ -38,27 +38,82 @@ public class JarPictLoader {
 
 		public ImageIcon getAs() {
 			// have a 'get' method for each image
-			return as;
+			return cas;
 		}
-
 		public ImageIcon getAd() {
 			// have a 'get' method for each image
-			return ad;
+			return cad;
 		}
 		public ImageIcon getAc() {
 			// have a 'get' method for each image
-			return ac;
+			return cac;
 		}
 		public ImageIcon getAh() {
 			// have a 'get' method for each image
-			return ah;
+			return cah;
 		}
 		public ImageIcon get2s() {
 			// have a 'get' method for each image
-			return 2s;
+			return c2s;
 		}
 		public ImageIcon get2d() {
 			// have a 'get' method for each image
-			return 2d;
+			return c2d;
+		}
+		public ImageIcon get2c() {
+			// have a 'get' method for each image
+			return c2c;
+		}
+		public ImageIcon get2h() {
+			// have a 'get' method for each image
+			return c2h;
+		}
+		public ImageIcon get3s() {
+			// have a 'get' method for each image
+			return c3s;
+		}
+		public ImageIcon get3d() {
+			// have a 'get' method for each image
+			return c3d;
+		}
+		public ImageIcon get3c() {
+			// have a 'get' method for each image
+			return c3c;
+		}
+		public ImageIcon get3h() {
+			// have a 'get' method for each image
+			return c3h;
+		}
+		public ImageIcon get4s() {
+			// have a 'get' method for each image
+			return c4s;
+		}
+		public ImageIcon get4d() {
+			// have a 'get' method for each image
+			return c4d;
+		}
+		public ImageIcon get4c() {
+			// have a 'get' method for each image
+			return c4c;
+		}
+		public ImageIcon get4h() {
+			// have a 'get' method for each image
+			return c4h;
+		}
+		public ImageIcon get5s() {
+			// have a 'get' method for each image
+			return c5s;
+		}
+		public ImageIcon get5d() {
+			// have a 'get' method for each image
+			return c5d;
+		}
+		public ImageIcon get5c() {
+			// have a 'get' method for each image
+			return c5c;
+		}
+		public ImageIcon get5h() {
+			// have a 'get' method for each image
+			return c5h;
 		}
 	}
