@@ -2,7 +2,8 @@
 /**
  *  @(#)JarPictLoader.java
  *
- *  Centralized location for loading all your image files when*  your program is loading from a Jar file.
+ *  Centralized location for loading all your image files when
+ *  your program is loading from a Jar file.
  *
  *  @author
  *  @version 1.00 2010/5/25
@@ -21,7 +22,8 @@ public class JarPictLoader {
 	public JarPictLoader() 
 	{
 		ClassLoader cldr = this.getClass().getClassLoader();
-		// just need to call this once for the whole programtry 
+		// just need to call this once for the whole program
+		try 
 		{
 			// the two steps required to get an images file location
 			// and then load it
@@ -41,7 +43,9 @@ public class JarPictLoader {
 				p.println("got here"); 
 				// sample output to file
 				e.printStackTrace(p);  
-				// print stack trace to output file}catch(Exception e1)    
+				// print stack trace to output file
+			}
+			catch(Exception e1)    
 				// need this empty section for PrintStream{}
 			}   
 		}
