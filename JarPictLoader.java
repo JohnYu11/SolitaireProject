@@ -16,7 +16,7 @@ import java.io.*;
 
 // for PrintStream to capture error info
 public class JarPictLoader {
-	private ImageIcon fishy1, fishy2;
+	private ImageIcon s,d,c,h,
 
 	// have one for each image needed
 	public JarPictLoader() 
