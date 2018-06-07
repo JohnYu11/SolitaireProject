@@ -24,8 +24,8 @@ public class JarPictLoader {
 	{
 		ClassLoader cldr = this.getClass().getClassLoader();
 		// just need to call this once for the whole program
-		try 
-		{
+	
+		
 			// the two steps required to get an images file location
 			// and then load it
 			URL fishy1IconURL   = cldr.getResource("fish.gif");
@@ -33,23 +33,8 @@ public class JarPictLoader {
 			Then printing the stack trace to an output file.
 			URL fishy2IconURL   = cldr.getResource("ERROR.gif");
 			fishy2 = new ImageIcon(fishy2IconURL);
-		}  
-		catch (Exception e)
-		{
-			try
-			{
-				// PrintStream methods need to be in a
-				// try-catch 
-				blockPrintStream p = new PrintStream(new FileOutputStream(new File("trace.txt")));
-				p.println("got here"); 
-				// sample output to file
-				e.printStackTrace(p);  
-				// print stack trace to output file
-			}
-			catch(Exception e1)    
-				// need this empty section for PrintStream{}
-			}   
-		}
+		
+		
 
 		public ImageIcon getFishy1() {
 			// have a 'get' method for each image
