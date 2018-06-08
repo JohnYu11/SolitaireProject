@@ -244,4 +244,17 @@ public class JarPictLoader {
 			// have a 'get' method for each image
 			return ckh;
 		}
+		
+		public ImageIcon gethome {
+			// have a 'get' method for each image
+			return home;
+		}
+		public ImageIcon getback {
+			// have a 'get' method for each image
+			return backcard;
+		}
+		public ImageIcon getwin {
+			// have a 'get' method for each image
+			return wonScreen;
+		}
 	}
