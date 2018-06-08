@@ -200,5 +200,48 @@ public class JarPictLoader {
 			// have a 'get' method for each image
 			return cjs;
 		}
-		
+		public ImageIcon getjd {
+			// have a 'get' method for each image
+			return cjd;
+		}
+		public ImageIcon getjc {
+			// have a 'get' method for each image
+			return cjc;
+		}
+		public ImageIcon getjh {
+			// have a 'get' method for each image
+			return cjh;
+		}
+		public ImageIcon getqs {
+			// have a 'get' method for each image
+			return cqs;
+		}
+		public ImageIcon getqd {
+			// have a 'get' method for each image
+			return cqd;
+		}
+		public ImageIcon getqc {
+			// have a 'get' method for each image
+			return cqc;
+		}
+		public ImageIcon getqh {
+			// have a 'get' method for each image
+			return cqh;
+		}
+		public ImageIcon getks {
+			// have a 'get' method for each image
+			return cks;
+		}
+		public ImageIcon getkd {
+			// have a 'get' method for each image
+			return ckd;
+		}
+		public ImageIcon getkc {
+			// have a 'get' method for each image
+			return ckc;
+		}
+		public ImageIcon getkh {
+			// have a 'get' method for each image
+			return ckh;
+		}
 	}
