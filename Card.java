@@ -68,7 +68,7 @@ public class Card
         {
             return "src/CardImages/backcard.gif"; //using escape sequence, not double slash
         }
-        if (myNumber == 10) return "src/CardImages/t" + mySuit + ".gif";
+        if (myNumber == 10) return "this.getClass().getResource"/CardImages/t" + mySuit + ".gif";
         if (myNumber == 11) return "src/CardImages/j" + mySuit + ".gif";
         if (myNumber == 12) return "src/CardImages/q" + mySuit + ".gif";
         if (myNumber == 13) return "src/CardImages/k" + mySuit + ".gif";
